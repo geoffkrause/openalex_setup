@@ -5,7 +5,7 @@ import json
 import os
 import time
 
-SNAPSHOT_DIR = '../openalex_snapshot'
+SNAPSHOT_DIR = '../openalex-snapshot'
 CSV_DIR = '../openalex_csv'
 
 if not os.path.exists(CSV_DIR):
