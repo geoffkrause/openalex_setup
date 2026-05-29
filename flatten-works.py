@@ -4,6 +4,7 @@ import gzip
 import json
 import os
 import time
+import argparse
 
 SNAPSHOT_DIR = '../openalex-snapshot'
 CSV_DIR = '../openalex_csv'
@@ -13,6 +14,21 @@ if not os.path.exists(CSV_DIR):
 
 ENTITY = 'works'
 SEP = ', '
+
+PARTDIR = [
+	"0/*/*.gz",
+	"updated_date=2025-11-06/part_0[0-1]*.gz",
+	"updated_date=2025-11-06/part_0[2-3].gz",
+	"updated_date=2025-11-06/part_0[4-5]*.gz",
+	"updated_date=2025-11-06/part_0[6-7]*.gz",
+	"updated_date=2025-11-06/part_0[8-9]*.gz",
+	"updated_date=2025-11-06/part_1*.gz",
+	"7/*/*.gz",
+	"8/*/*.gz",
+	"9/*/*.gz",
+	"10/*/*.gz",
+	"11/*/*.gz"
+]
 
 csv_files = {
     'works': {
@@ -111,31 +127,58 @@ csv_files = {
 def flatten_works():
 	file_spec = csv_files[ENTITY]
 	
-	with gzip.open(file_spec['works']['name'], 'wt',
+#	with gzip.open(file_spec['works']['name'], 'wt',
+#                   encoding='utf-8') as works_csv, \
+#            gzip.open(file_spec['locations']['name'], 'wt',
+#                      encoding='utf-8') as locations, \
+#            gzip.open(file_spec['authorships']['name'], 'wt',
+#                      encoding='utf-8') as authorships_csv, \
+#            gzip.open(file_spec['topics']['name'], 'wt',
+#                      encoding='utf-8') as topics_csv, \
+#            gzip.open(file_spec['mesh']['name'], 'wt',
+#                      encoding='utf-8') as mesh_csv, \
+#            gzip.open(file_spec['referenced_works']['name'], 'wt',
+#                      encoding='utf-8') as referenced_works_csv, \
+#            gzip.open(file_spec['related_works']['name'], 'wt',
+#                      encoding='utf-8') as related_works_csv, \
+#            gzip.open(file_spec['abstracts']['name'], 'wt',
+#                      encoding='utf-8') as abstracts_csv, \
+#            gzip.open(file_spec['apcs']['name'], 'wt',
+#                      encoding='utf-8') as apcs_csv, \
+#            gzip.open(file_spec['awards']['name'], 'wt',
+#                      encoding='utf-8') as awards_csv, \
+#            gzip.open(file_spec['funders']['name'], 'wt',
+#                      encoding='utf-8') as funders_csv, \
+#            gzip.open(file_spec['sdgs']['name'], 'wt',
+#                      encoding='utf-8') as sdgs_csv, \
+#            gzip.open(file_spec['counts_by_year']['name'], 'wt',
+#                      encoding='utf-8') as counts_by_year_csv:
+
+	with gzip.open(f"{CSV_DIR}/{ENTITY}/works-{PARTNUM}.csv.gz", 'wt',
                    encoding='utf-8') as works_csv, \
-            gzip.open(file_spec['locations']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_locations-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as locations, \
-            gzip.open(file_spec['authorships']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_authorships-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as authorships_csv, \
-            gzip.open(file_spec['topics']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_topics-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as topics_csv, \
-            gzip.open(file_spec['mesh']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_mesh-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as mesh_csv, \
-            gzip.open(file_spec['referenced_works']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_referenced_works-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as referenced_works_csv, \
-            gzip.open(file_spec['related_works']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_related_works-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as related_works_csv, \
-            gzip.open(file_spec['abstracts']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_abstracts-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as abstracts_csv, \
-            gzip.open(file_spec['apcs']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_apcs-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as apcs_csv, \
-            gzip.open(file_spec['awards']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_awards-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as awards_csv, \
-            gzip.open(file_spec['funders']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_funders-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as funders_csv, \
-            gzip.open(file_spec['sdgs']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_sdgs-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as sdgs_csv, \
-            gzip.open(file_spec['counts_by_year']['name'], 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/works_counts_by_year-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as counts_by_year_csv:
                       
 		works_writer = init_dict_writer(works_csv, file_spec['works'], lineterminator='\n')
@@ -158,7 +201,7 @@ def flatten_works():
 		counts_by_year_writer = init_dict_writer(counts_by_year_csv, 
         										file_spec['counts_by_year'],lineterminator='\n')
 
-		for jsonl_file_name in glob.glob(os.path.join(SNAPSHOT_DIR, 'data', ENTITY, '*', '*.gz')):
+		for jsonl_file_name in glob.glob(os.path.join(SNAPSHOT_DIR, 'data', ENTITY, PARTDIR[PARTNUM])):
 			print(jsonl_file_name)
 			with gzip.open(jsonl_file_name, 'r') as works_jsonl:
 				for work_json in works_jsonl:
@@ -332,6 +375,12 @@ def init_dict_writer(csv_file, file_spec, **kwargs):
 
 
 if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Process the works directory in chunks')
+	parser.add_argument('chunk', type=int)
+	args = parser.parse_args()
+	
+	PARTNUM = args.chunk
+	
 	if not os.path.exists(os.path.join(CSV_DIR, ENTITY)):
 		os.mkdir(os.path.join(CSV_DIR, ENTITY))
 
