@@ -182,31 +182,31 @@ def flatten_works():
 #            gzip.open(file_spec['counts_by_year']['name'], 'wt',
 #                      encoding='utf-8') as counts_by_year_csv:
 
-	with gzip.open(f"{CSV_DIR}/{ENTITY}/works-{PARTNUM}.csv.gz", 'wt',
+	with gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works-{PARTNUM}.csv.gz", 'wt',
                    encoding='utf-8') as works_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_locations-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_locations-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as locations, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_authorships-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_authorships-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as authorships_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_topics-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_topics-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as topics_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_mesh-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_mesh-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as mesh_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_referenced_works-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_referenced_works-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as referenced_works_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_related_works-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_related_works-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as related_works_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_abstracts-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_abstracts-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as abstracts_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_apcs-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_apcs-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as apcs_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_awards-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_awards-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as awards_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_funders-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_funders-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as funders_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_sdgs-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_sdgs-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as sdgs_csv, \
-            gzip.open(f"{CSV_DIR}/{ENTITY}/works_counts_by_year-{PARTNUM}.csv.gz", 'wt',
+            gzip.open(f"{CSV_DIR}/{ENTITY}/{PARTNUM}/works_counts_by_year-{PARTNUM}.csv.gz", 'wt',
                       encoding='utf-8') as counts_by_year_csv:
                       
 		works_writer = init_dict_writer(works_csv, file_spec['works'], lineterminator='\n')
@@ -411,6 +411,9 @@ if __name__ == '__main__':
 	
 	if not os.path.exists(os.path.join(CSV_DIR, ENTITY)):
 		os.mkdir(os.path.join(CSV_DIR, ENTITY))
+
+	if not os.path.exists(os.path.join(CSV_DIR, ENTITY, f"{PARTNUM}")):
+		os.mkdir(os.path.join(CSV_DIR, ENTITY, f"{PARTNUM}"))
 
 	start = time.time()
 	flatten_works()
