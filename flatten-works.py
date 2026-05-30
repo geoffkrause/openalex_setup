@@ -17,7 +17,7 @@ SEP = ', '
 
 PARTDIR = [
 	"updated_date=201*/*.gz",
-	"updated_date=202[0-4]/*.gz",
+	"updated_date=202[0-4]-*/*.gz",
 	"updated_date=2025-0*/*.gz",
 	"updated_date=2025-10-0*/*.gz",
 	"updated_date=2025-10-10/*.gz",
