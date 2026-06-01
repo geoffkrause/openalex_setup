@@ -264,7 +264,7 @@ def flatten_works():
         										file_spec['counts_by_year'],lineterminator='\n')
 
 		for jsonl_file_name in glob.glob(os.path.join(SNAPSHOT_DIR, 'data', ENTITY, PARTDIR[PARTNUM])):
-			print(jsonl_file_name)
+			print(jsonl_file_name, flush=True)
 			with gzip.open(jsonl_file_name, 'r') as works_jsonl:
 				for work_json in works_jsonl:
 					if not work_json.strip():
