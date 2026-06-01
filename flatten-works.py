@@ -86,8 +86,10 @@ PARTDIR = [
 	"updated_date=2026-03-27/part_000*.gz",
 	"updated_date=2026-03-27/part_001*.gz",
 	"updated_date=2026-03-27/part_003*.gz",
-	"updated_date=2026-03-27/part_003*.gz",
-	"updated_date=2026-03-27/part_004*.gz",
+	"updated_date=2026-03-27/part_003[0-4].gz",
+	"updated_date=2026-03-27/part_003[5-9].gz",
+	"updated_date=2026-03-27/part_004[0-4].gz",
+	"updated_date=2026-03-27/part_004[5-9].gz",
 	"updated_date=2026-03-2[8-9]/*.gz",
 	"updated_date=2026-03-30/*.gz"
 ]
