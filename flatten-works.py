@@ -63,9 +63,9 @@ PARTDIR = [
 	"updated_date=2026-01-2[2-9]/*.gz",
 	"updated_date=2026-01-30/*.gz",
 	"updated_date=2026-02-0[1-8]/*.gz",
-	"updated_date=2026-02-09/part_00[0-4]*.gz",
-	"updated_date=2026-02-09/part_00[5-9]*.gz",
-	"updated_date=2026-02-09/part_01*.gz",
+	"updated_date=2026-02-09/part_00[0-2]*.gz",
+	"updated_date=2026-02-09/part_00[3-5]*.gz",
+	"updated_date=2026-02-09/part_00[6-7].gz",
 	"updated_date=2026-02-10/*.gz",
 	"updated_date=2026-02-11/*.gz",
 	"updated_date=2026-02-1[2-9]/*.gz",
@@ -92,7 +92,10 @@ PARTDIR = [
 	"updated_date=2026-03-27/part_004[0-4].gz",
 	"updated_date=2026-03-27/part_004[5-9].gz",
 	"updated_date=2026-03-2[8-9]/*.gz",
-	"updated_date=2026-03-30/*.gz"
+	"updated_date=2026-03-30/*.gz",
+	"updated_date=2026-02-09/part_00[8-9]*.gz",
+	"updated_date=2026-02-09/part_01[0-2]*.gz",
+	"updated_date=2026-02-09/part_01[3-5].gz"
 ]
 
 csv_files = {
