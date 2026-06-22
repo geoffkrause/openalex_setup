@@ -64,7 +64,7 @@ def flatten_awards():
 
 def init_dict_writer(csv_file, file_spec, **kwargs):
     writer = csv.DictWriter(
-        csv_file, fieldnames=file_spec['columns'], extrasaction='ignore', **kwargs
+        csv_file, fieldnames=file_spec['columns'], extrasaction='ignore', quoting=csv.QUOTE_STRINGS, **kwargs
     )
     writer.writeheader()
     return writer
